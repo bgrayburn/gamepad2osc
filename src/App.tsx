@@ -1,24 +1,22 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import OSC from 'osc-js'
 
 function App() {
+  const sendTestOSCMessage = () => {
+    console.log('sending an OSC message')
+
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div id="gamepad-panel">
+        <h2>Gamepad</h2>
+      </div> 
+      <div id="osc-panel">
+        <h2>OSC (test)</h2>
+        <button onClick={sendTestOSCMessage}>send</button>
+      </div>
     </div>
   );
 }
