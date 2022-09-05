@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Panel from './Panel'
 import { useGamepads } from 'react-gamepads'
 
 
@@ -10,27 +11,38 @@ const GamepadPanel = () => {
   const [ gamepads, setGamepads ] = useState<GamepadRef>([])
   useGamepads((gamepads: GamepadRef) => setGamepads(gamepads))
   const gamepadConnectionStatus = Object.keys(gamepads).length > 0 ? 'Connected': 'Not Connected'
-  return <div id="gamepad-panel">
-    <h2>Gamepad</h2>
-    <span><h3>Connection Status</h3>{gamepadConnectionStatus}</span>
-    <span><h3>Gamepads</h3>
-      <span><h4>Connection Status</h4>
-        {gamepadConnectionStatus}
-      </span>
-      {
-        gamepadConnectionStatus == 'Connected' ?
-          <GamepadDisplay gamepad={gamepads[0]} /> :
-          '---'
-      }
-    </span>
-  </div>
-
+  const sections = [
+    {
+      title: 'Connection Status',
+      children: [
+        <span>{gamepadConnectionStatus}</span>
+      ]
+    },
+    {
+      title: 'Gamepads',
+      children: [
+        <span>
+          {
+            gamepadConnectionStatus === 'Connected' ?
+              <GamepadDisplay gamepad={gamepads[0]} /> :
+              '---'
+          }
+        </span>  
+      ]
+    }
+  ]
+  return <Panel title='Gamepad' sections={sections} />
 }
 
-const ButtonDisplay = ({button}: any) => {
-  return <span>
-    {JSON.stringify(button)}
-  </span>
+interface ButtonDisplayProps {
+    button: GamepadButton
+    key: number
+}
+const ButtonDisplay = ({button, key}: ButtonDisplayProps) => {
+  return <div>
+    <h5>{key}</h5>
+    {button.pressed ? 'pressed' : 'not pressed'}
+  </div>
 }
 
 interface GamepadDisplayProps {
