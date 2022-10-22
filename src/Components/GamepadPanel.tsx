@@ -1,30 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, MutableRefObject } from 'react'
 import Panel from './Panel'
 import { useGamepads } from 'react-gamepads'
-
 
 interface GamepadRef {
     [key: number]: Gamepad
 }
 
-const GamepadPanel = () => {
-  const [ gamepads, setGamepads ] = useState<GamepadRef>([])
-  useGamepads((gamepads: GamepadRef) => setGamepads(gamepads))
-  const gamepadConnectionStatus = Object.keys(gamepads).length > 0 ? 'Connected': 'Not Connected'
+interface GamepadPanelProps {
+  gamepad: Gamepad
+}
+const GamepadPanel = ({ gamepad }: GamepadPanelProps) => {
+  const gamepadConnectionStatus = Boolean(gamepad) ? 'Connected' : 'Not Connected'
   const sections = [
     {
       title: 'Connection Status',
       children: [
-        <span>{gamepadConnectionStatus}</span>
+        <span key='status'>{gamepadConnectionStatus}</span>
       ]
     },
     {
       title: 'Gamepads',
       children: [
-        <span>
+        <span key='gamepads'>
           {
             gamepadConnectionStatus === 'Connected' ?
-              <GamepadDisplay gamepad={gamepads[0]} /> :
+              <GamepadDisplay gamepad={gamepad} /> :
               '---'
           }
         </span>  
@@ -36,12 +36,11 @@ const GamepadPanel = () => {
 
 interface ButtonDisplayProps {
     button: GamepadButton
-    key: number
+    index: number
 }
-const ButtonDisplay = ({button, key}: ButtonDisplayProps) => {
-  return <div>
-    <h5>{key}</h5>
-    {button.pressed ? 'pressed' : 'not pressed'}
+const ButtonDisplay = ({button, index}: ButtonDisplayProps) => {
+  return <div style={{display: 'inline', padding: '10px'}}>
+    {index}: {button.pressed ? 'pressed' : 'not pressed'}
   </div>
 }
 
@@ -59,7 +58,7 @@ const GamepadDisplay = ({gamepad}: GamepadDisplayProps) => {
     <span>
       <h4>Buttons</h4>
       {
-        gamepad.buttons.map((b, i) => <ButtonDisplay button={b} key={i}/>)
+        gamepad.buttons.map((b, i) => <ButtonDisplay button={b} key={i} index={i} />)
       }
     </span>
   </div>

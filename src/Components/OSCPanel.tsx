@@ -1,17 +1,25 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, MutableRefObject} from 'react'
 import { toast } from 'react-hot-toast'
 import OSC from 'osc-js'
 import Panel from './Panel'
 
-const OSCPanel = () => {
+interface OSCPanelProps {
+  oscRef: MutableRefObject<{}>;
+}
+const OSCPanel = ({oscRef}: OSCPanelProps) => {
+  const [osc, setOsc] = useState(new OSC())
   const [host, setHost] = useState('localhost')
   const [port, setPort] = useState(8081)
   const [address, setAddress] = useState('/gamepad/test')
-  const [osc, setOsc] = useState(new OSC())
+
+  useEffect(() => {
+    oscRef.current = osc
+  }, [osc, oscRef])
  
   const connectOSC = (host: string, port: number) => {
-    const newOsc = new OSC({ port, host})
-    newOsc.open()
+    const newOsc = new OSC({ port, host })
+    newOsc.open({ port, host })
+    newOsc.sendOSCMessage = (message: string) => newOsc.send(message)
     setOsc(newOsc)
     return newOsc
   }
@@ -42,13 +50,6 @@ const OSCPanel = () => {
       ]
     },
     {
-      title: 'Address',
-      children: [
-        <input id='address' onChange={evt => setAddress(evt.target.value)} value={address} />,
-        <span>{osc.options.plugin.address}</span>
-      ]
-    },
-    {
       title: 'Connection Status',
       children: [
         <span>{connectionStatus}</span>
@@ -59,6 +60,13 @@ const OSCPanel = () => {
       children: [
         <button onClick={() => connectOSC(host, port)} >Connect</button>,
         <button onClick={() => disconnectOSC()} >Disconnect</button>
+      ]
+    },
+    {
+      title: 'Test Address',
+      children: [
+        <input id='address' onChange={evt => setAddress(evt.target.value)} value={address} />,
+        <span>{osc.options.plugin.address}</span>
       ]
     },
     {
