@@ -95,11 +95,9 @@ const applyMappings =  (gamepad: Gamepad, osc: {send: any}, mappings: Mapping[])
       case 'axes':
         const ik2 = inputKey*2
         const [x, y]: number[] = gamepad.axes.slice(ik2, ik2+2)
-        if (x | y) {
+        if ((x>0) || (y>0)) {
           const msg = new OSC.Message(m.output, x, y)
           osc.send(msg)
-          console.log('x:', x)
-          console.log('y:', y)
         }
     }
   })

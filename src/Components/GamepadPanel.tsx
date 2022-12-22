@@ -3,7 +3,7 @@ import Panel from './Panel'
 import { useGamepads } from 'react-gamepads'
 
 interface GamepadRef {
-    [key: number]: Gamepad
+  [key: number]: Gamepad
 }
 
 interface GamepadPanelProps {
@@ -35,8 +35,8 @@ const GamepadPanel = ({ gamepad }: GamepadPanelProps) => {
 }
 
 interface ButtonDisplayProps {
-    button: GamepadButton
-    index: number
+  button: GamepadButton
+  index: number
 }
 const ButtonDisplay = ({button, index}: ButtonDisplayProps) => {
   return <div style={{display: 'inline', padding: '10px'}}>
@@ -45,7 +45,7 @@ const ButtonDisplay = ({button, index}: ButtonDisplayProps) => {
 }
 
 interface GamepadDisplayProps {
-    gamepad: Gamepad
+  gamepad: Gamepad
 }
 const GamepadDisplay = ({gamepad}: GamepadDisplayProps) => {
   return <div>
