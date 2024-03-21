@@ -11,6 +11,7 @@ to send OSC messages in response to a game controller connected over bluetooth o
 - open [http://localhost:3000](http://localhost:3000) to view it in the browser
 
 ## todo
+- [ ] split osc and test panels
 - [ ] store settings in local storage
 - [ ] ability to save and load settings from file
 - [ ] ability to configure a button by pressing it instead of specifying button id
