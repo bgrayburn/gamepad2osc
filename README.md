@@ -1,3 +1,7 @@
+# Gamepad2OSC
+Using OSC, I commonly found it would be useful to have some kind of hardware to trigger packets for testing or prototyping. To that end I built a webapp that uses the GameController and fetch api
+to send OSC messages in response to a game controller connected over bluetooth or usb.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
