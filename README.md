@@ -23,4 +23,3 @@ to send OSC messages in response to a game controller connected over bluetooth o
 - [ ] Flexbox for buttons in Gamepad section
 - [ ] Text for connection status is OSC section
 - [ ] Add ability to create mappings by touching button instead of entering its number
-  > > > > > > > Stashed changes
